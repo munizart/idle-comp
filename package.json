@@ -1,0 +1,10 @@
+{
+  "name": "idle-comp",
+  "version": "0.0.1",
+  "description": "IdleComp is a functor for sequencial non-blocking computation ",
+  "main": "index.js",
+  "repository": "git@github.com:munizart/idle-comp.git",
+  "author": "Artur Muniz <arturmunizjr+open-source@gmail.com>",
+  "license": "MIT",
+  "private": false
+}
