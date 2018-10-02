@@ -1,6 +1,28 @@
 # IdleComp
 A **comp**osable way to perform *non-bloking* **comp**utations in JavaScript.
 
+IdleComp is based on [@philipwalton](https://github.com/philipwalton)'s [Idle Until Urgent](https://philipwalton.com/articles/idle-until-urgent/) article and provide you a simple and composable way to run code on your web application without blocking user input.
+The only thing you have to do is following one simple rule.
+
+> Write small simple functions and compose they together.
+
+## Composition
+
+A insteristing property of IdleComp is that doing this:
+```javascript
+IdleComp
+  .of(5)
+  .map(increment)
+  .map(double)
+```
+Is equivalent to this:
+```javascript
+IdleComp
+  .of(5)
+  .map(x => double(increment(x)))
+```
+This mean that calling subsequents `map`s is exactly like composing functions!
+
 ## Usage
 Lets try some computating some things.
 First, lets define an dragons array.
@@ -64,28 +86,9 @@ As you see, the fisrt two `console.log`s are executed first and the executation 
 
 As we resume the mapping chain, we deffer the rest of the execution to either the next `.fold()` or the next iddle slice of time, whatever comes first.
 
-## Composition
-
-A insteristing property of IdleComp is that doing this:
-```javascript
-IdleComp
-  .of(5)
-  .map(increment)
-  .map(double)
-```
-Is equivalent to this:
-```javascript
-IdleComp
-  .of(5)
-  .map(x => double(increment(x)))
-```
-This mean that calling subsequents `map`s is like composing functions!
-
 ## Roadmap
 
 Those are features that are on our backlog.
 
  - Creation of an async chainable method, that turns a IdleComp chain into asynchronous. (e.g. waits for promises to resolve value, then wait for the next idle cicle to process). [#1](https://github.com/munizart/idle-comp/issues/1)
  - Testing [#2](https://github.com/munizart/idle-comp/issues/2)
- - Github pages with docs [#3](https://github.com/munizart/idle-comp/issues/3)
- - Automatizate docs with jsdocs, npm scripts and CI [#4](https://github.com/munizart/idle-comp/issues/4)
