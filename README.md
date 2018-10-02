@@ -6,6 +6,13 @@ The only thing you have to do is following one simple rule.
 
 > Write small simple functions and compose they together.
 
+## Why?
+Traditionally, web browsers' javascript runs on the same single thread as other page's tasks like painting and parsing.
+Meaning your code will either take long enough to blocks those tasks or be sort to, hopefully, not interfering on user experience.
+While we do have other alternatives like workers, they usually are very limited and can't manipulete the DOM tree.
+
+IdleComp takes advantege of page's idle times to executing sort tasks, providing an easy interface that allows for composition.
+
 ## Composition
 
 A insteristing property of IdleComp is that doing this:
@@ -24,10 +31,46 @@ IdleComp
 This mean that calling subsequents `map`s is exactly like composing functions!
 
 ## Usage
-Lets try some computating some things.
+
+To create a new IdleComp object, you should use `IdleComp.of` and pass in your initial value.
+```javascript
+import IdleComp from 'idle-comp'
+
+const idleFive = IdleComp.of(5)
+```
+
+Now `idleFive` is an Object with to methods: `map` and `fold`.
+
+`map` is how we're going to do our idle computations.
+
+```javascript
+idleFive
+  .map(five => five * 2)
+  .map(ten => ten - 1)
+  .map(console.log) // 9
+```
+
+As we're computing only when the browser is idle, this also means we're delegating your computation to some time in the future - Asynchronous.
+
+But sometimes you will need the value rigth away, even if blocking.
+This is when `fold` kicks in.
+
+`fold` will execute all pending computation and returns the final result.
+
+```javascript
+const idleNine = idleFive
+  .map(five => five * 2)
+  .map(ten => ten - 1)
+
+//Right now idleNine isn't resolved yet, let's force all computations synchronously
+
+console.log(idleNine.fold()) // 9
+```
+
+### Example
 First, lets define an dragons array.
 ```javascript
-var dragons = [
+const dragons = [
     { age: 2, name: 'Halph' },
     { age: 5, name: 'Pottus' },
     { age: 3, name: 'Traus' },
@@ -41,7 +84,7 @@ var dragons = [
 Now a logging helper
 ```javascript
 // Just log x and then return it
-var log = x => {
+const log = x => {
   console.log(x)
   return x
 }
@@ -49,7 +92,7 @@ var log = x => {
 
 Now lets sort the dragons by age in descending order, get the last and shout it's name
 ```javascript
-var idleName = IdleComp
+const idleName = IdleComp
   .of(dragons) // Bring our dragons to the idle realm
   .map(dragons => dragons.sort((dA, dB) => dB.age - dA.age)) // sort them by age
   .map(dragons => dragons[6]) // get the last
@@ -60,7 +103,7 @@ var idleName = IdleComp
 console.log('First me')
 console.log('Than me')
 
-var name = idleName.fold() // Forces all remaning idles to run synchronously
+const name = idleName.fold() // Forces all remaning idles to run synchronously
 
 console.log(name)
 
