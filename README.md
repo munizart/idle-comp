@@ -32,6 +32,13 @@ This mean that calling subsequents `map`s is exactly like composing functions!
 
 ## Usage
 
+To install:
+```sh
+npm install --save idle-comp
+#or
+yarn add idle-comp
+```
+
 To create a new IdleComp object, you should use `IdleComp.of` and pass in your initial value.
 ```javascript
 import IdleComp from 'idle-comp'
