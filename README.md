@@ -1,13 +1,13 @@
 # IdleComp
-A **comp**osable way to perform *non-bloking* **comp**utations in JavaScript.
+A **comp**osable way to perform *non-blocking* **comp**utations in JavaScript.
 
 IdleComp is based on [@philipwalton](https://github.com/philipwalton)'s [Idle Until Urgent](https://philipwalton.com/articles/idle-until-urgent/) article and provide you a simple and composable way to run code on your web application without blocking user input.
-The only thing you have to do is following one simple rule.
+The only thing you have to do is follow one simple rule.
 
 > Write small simple functions and compose they together.
 
 ## Why?
-Traditionally, web browsers' javascript runs on the same single thread as other page's tasks like painting and parsing.
+Traditionally, web browsers javascript runs on the same single thread as other page's tasks like painting and parsing.
 Meaning your code will either take long enough to blocks those tasks or be sort to, hopefully, not interfering on user experience.
 While we do have other alternatives like workers, they usually are very limited and can't manipulete the DOM tree.
 
@@ -75,7 +75,7 @@ console.log(idleNine.fold()) // 9
 ```
 
 ### Example
-First, lets define an dragons array.
+First, lets define a dragons array.
 ```javascript
 const dragons = [
     { age: 2, name: 'Halph' },
@@ -122,7 +122,7 @@ idleName
 console.log('end of file')
 ```
 
-When this example is ran, we got the pritings
+When this example is ran, we got the printings
 ```
 First me
 Than me
@@ -132,13 +132,13 @@ end of file
 NICE
 ```
 
-As you see, the fisrt two `console.log`s are executed first and the executation of the first `.map(log)` (as well as the entire map chain) is deffered until we explicit request the value with `.fold()`.
+As you see, the fisrt two `console.log`s are executed first and the executation of the first `.map(log)` (as well as the entire map chain) is deferred until we explicit request the value with `.fold()`.
 
-As we resume the mapping chain, we deffer the rest of the execution to either the next `.fold()` or the next iddle slice of time, whatever comes first.
+As we resume the mapping chain, we defer the rest of the execution to either the next `.fold()` or the next idle slice of time, whatever comes first.
 
 ## Roadmap
 
 Those are features that are on our backlog.
 
- - Creation of an async chainable method, that turns a IdleComp chain into asynchronous. (e.g. waits for promises to resolve value, then wait for the next idle cicle to process). [#1](https://github.com/munizart/idle-comp/issues/1)
+ - Creation of an async chainable method, that turns a IdleComp chain into asynchronous. (e.g. waits for promises to resolve value, then wait for the next idle cycle to process). [#1](https://github.com/munizart/idle-comp/issues/1)
  - Testing [#2](https://github.com/munizart/idle-comp/issues/2)
