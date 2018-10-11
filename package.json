@@ -1,6 +1,6 @@
 {
   "name": "idle-comp",
-  "version": "0.0.4",
+  "version": "1.0.0",
   "description": "A composable way to perform non-bloking computations in JavaScript",
   "keywords": ["requestIdleCallback", "idle", "until", "urgent", "cancelIdleCallback"],
   "main": "lib/index.js",
