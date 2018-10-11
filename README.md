@@ -46,7 +46,7 @@ import IdleComp from 'idle-comp'
 const idleFive = IdleComp.of(5)
 ```
 
-Now `idleFive` is an Object with to methods: `map` and `fold`.
+Now `idleFive` is an Object with to methods: `map` and `returns`.
 
 `map` is how we're going to do our idle computations.
 
@@ -60,9 +60,9 @@ idleFive
 As we're computing only when the browser is idle, this also means we're delegating your computation to some time in the future - Asynchronous.
 
 But sometimes you will need the value rigth away, even if blocking.
-This is when `fold` kicks in.
+This is when `returns` kicks in.
 
-`fold` will execute all pending computation and returns the final result.
+`returns` will execute all pending computation and returns the final result.
 
 ```javascript
 const idleNine = idleFive
@@ -71,7 +71,7 @@ const idleNine = idleFive
 
 //Right now idleNine isn't resolved yet, let's force all computations synchronously
 
-console.log(idleNine.fold()) // 9
+console.log(idleNine.returns()) // 9
 ```
 
 ### Example
@@ -110,7 +110,7 @@ const idleName = IdleComp
 console.log('First me')
 console.log('Than me')
 
-const name = idleName.fold() // Forces all remaning idles to run synchronously
+const name = idleName.returns() // Forces all remaning idles to run synchronously
 
 console.log(name)
 
@@ -132,9 +132,9 @@ end of file
 NICE
 ```
 
-As you see, the fisrt two `console.log`s are executed first and the executation of the first `.map(log)` (as well as the entire map chain) is deffered until we explicit request the value with `.fold()`.
+As you see, the fisrt two `console.log`s are executed first and the executation of the first `.map(log)` (as well as the entire map chain) is deffered until we explicit request the value with `.returns()`.
 
-As we resume the mapping chain, we deffer the rest of the execution to either the next `.fold()` or the next iddle slice of time, whatever comes first.
+As we resume the mapping chain, we deffer the rest of the execution to either the next `.returns()` or the next iddle slice of time, whatever comes first.
 
 ## Roadmap
 
