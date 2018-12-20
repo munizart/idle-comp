@@ -32,7 +32,7 @@ var idleName = IdleComp
 console.log('First me')
 console.log('Than me')
 
-var name = idleName.fold() // Forces all remaning idles to run synchronously
+var name = idleName.returns() // Forces all remaning idles to run synchronously
 
 console.log(name)
 
